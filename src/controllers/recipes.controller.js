@@ -22,7 +22,7 @@ exports.getAllRecipes = async function (_, res) {
 exports.createRecipe = async function (req, res) {
     try {
         let newRecipe = await Recipe.create(req.body);
-        res.status(204).send(newRecipe);
+        res.send(newRecipe);
     } catch (err) {
         res.status(500).send(err);
     }
@@ -38,7 +38,7 @@ exports.getRecipe = async function (req, res) {
         let data = await Recipe.find({ name: req.params.recipeName });
         res.send(data);
     } catch (err) {
-        res.send(err);
+        res.status(500).send(err);
     }
 };
 
