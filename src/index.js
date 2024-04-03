@@ -8,6 +8,7 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 // below middleware is used to log requests to the console
 const logger = require('morgan');
@@ -15,6 +16,7 @@ const bodyParser = require('body-parser');
 
 // below middleware is used to handle routs and errors. these are user created middleware
 const recipesRoutes = require('./routes/recipes.routes');
+const authRoutes = require('./routes/auth.routes');
 const middleware = require('./middleware/errors.middleware');
 
 // Create an instance of express
@@ -46,13 +48,16 @@ app.use(logger(logLevel));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// Allow websites to talk to our API service.
+app.use(cors());
 
 /**
  * the below components are the user defined middleware endpoints, and error handling middleware.
  */
 
 // Handle routes for tasks.
-app.use('/recipes', recipesRoutes);
+app.use('/api/auth', authRoutes); // http://localhost:3000/api/auth
+app.use('/api/recipes', recipesRoutes);
 
 // Handle 404 requests
 app.use(middleware.error404);
