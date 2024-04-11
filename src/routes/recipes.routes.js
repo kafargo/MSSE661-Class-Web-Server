@@ -17,7 +17,7 @@ recipesRoutes
     .post('/', controllers.createRecipe);
 
 /**
- * Routes for a recipe by id. Evalutes to `/recipes/:recipeId`.
+ * Routes for a recipe by id. Evalutes to `/recipes/:recipeName`.
  */
 // http://localhost:3000/recipes/recipeName
 recipesRoutes

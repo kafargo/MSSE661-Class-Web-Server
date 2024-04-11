@@ -17,6 +17,7 @@ const bodyParser = require('body-parser');
 // below middleware is used to handle routs and errors. these are user created middleware
 const recipesRoutes = require('./routes/recipes.routes');
 const authRoutes = require('./routes/auth.routes');
+const userRoutes = require('./routes/user.routes');
 const middleware = require('./middleware/errors.middleware');
 
 // Create an instance of express
@@ -58,6 +59,7 @@ app.use(cors());
 // Handle routes for tasks.
 app.use('/api/auth', authRoutes); // http://localhost:3000/api/auth
 app.use('/api/recipes', recipesRoutes);
+app.use('/api/users', userRoutes);
 
 // Handle 404 requests
 app.use(middleware.error404);
