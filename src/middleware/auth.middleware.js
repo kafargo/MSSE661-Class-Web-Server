@@ -17,6 +17,7 @@ module.exports = (req, res, next) => {
     // verify the token is correct
     const user = verifyToken(accessToken, jwtconfig.access, req, res);
     req.user = user;
+    console.log('User:', user);
     next();
   } catch (err) {
     res.status(403).json({ msg: 'Invalid Token' });
