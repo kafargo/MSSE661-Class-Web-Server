@@ -9,7 +9,13 @@ chai.use(chaiHttp);
 //the service must be running for these test to run!
 //the version of mocha and chai matter here becasue newest versions require some additional refactoring to get to work.
 
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MGM4NGZlMjcwODMwMTlmN2M2ODM5MiIsImlhdCI6MTcxMjc4NzY2MywiZXhwIjoxNzEyODc0MDYzfQ.Q2CSGhRwNvCZ13kbK3-hm3Lo4Zs_Mmb8sEHoCTqSilA'
+const {
+  generateAccessToken,
+} = require('../src/utils/jwt-helpers');
+
+const accessToken = generateAccessToken('661a052490d378d93a231f51', {
+  expiresIn: 86400,
+});
 
 describe("User API service", () => {
   
@@ -17,7 +23,7 @@ describe("User API service", () => {
     chai
     .request("http://localhost:3000")
     .get("/api/users/currentuser")
-    .set('Authorization', `Bearer ${token}`)
+    .set('Authorization', `Bearer ${accessToken}`)
     .send({
       userEmail: "admins@theadmins.com",
     })
