@@ -14,7 +14,8 @@ const recipesRoutes = express.Router();
 // http://localhost:3000/recipes/
 recipesRoutes
     .get('/', controllers.getAllRecipes)
-    .post('/', controllers.createRecipe);
+    .post('/', controllers.createRecipe)
+    .post('/allingredients', controllers.getRecipeIngredients); // /api/recipes/allingredients
 
 /**
  * Routes for a recipe by id. Evalutes to `/recipes/:recipeName`.

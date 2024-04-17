@@ -75,3 +75,13 @@ exports.deleteRecipe = async function (req, res) {
         res.status(500).send(err);
     }
 };
+
+exports.getRecipeIngredients = async function (req, res) {
+    try {
+        let names = req.body.names;
+        let ingredients = await Recipe.find({ name: { $in: names } }, { ingredients: 1 });
+        res.send(ingredients);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+};
