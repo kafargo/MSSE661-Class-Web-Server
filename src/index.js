@@ -27,10 +27,7 @@ const logLevel = process.env.LOG_LEVEL || "dev";
 
 // Make connection to the db
 mongoose.Promise = global.Promise;
-mongoose.connect("mongodb://localhost:27017/Recipes", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect("mongodb://localhost:27017/Recipes", {});
 
 // Store the instance of db so we can listen to events.
 const db = mongoose.connection;
