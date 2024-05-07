@@ -6,7 +6,7 @@ const {
   refreshTokens,
   generateAccessToken,
   generateRefreshToken,
-} = require('../utils/jwt-helpers');
+} = require("../utils/jwt-helpers");
 
 //register function
 exports.register = async function (req, res) {
@@ -40,11 +40,11 @@ exports.login = async function (req, res) {
       .compare(req.body.userPassword, existingUser.userPassword)
       .catch((err) => {
         console.log(err);
-        res.status(500).json({ msg: "Invalid password!" });
+        return res.status(500).json({ msg: "Invalid password!" });
       });
     //   if password is invalid return error
     if (!validPass) {
-      res.status(400).json({ msg: "Invalid password!" });
+      return res.status(400).json({ msg: "Invalid password!" });
     }
     /**
      * Create a new access token and refresh token
@@ -59,17 +59,14 @@ exports.login = async function (req, res) {
 
     refreshTokens.push(refreshToken);
 
-    res
-      .header('access_token', accessToken)
-      .json({
-        auth: true,
-        msg: 'Logged in!',
-        token_type: 'bearer',
-        access_token: accessToken,
-        expires_in: 86400,
-        refresh_token: refreshToken,
-      });
-
+    res.header("access_token", accessToken).json({
+      auth: true,
+      msg: "Logged in!",
+      token_type: "bearer",
+      access_token: accessToken,
+      expires_in: 86400,
+      refresh_token: refreshToken,
+    });
   } catch (error) {
     console.log(error);
   }
@@ -87,18 +84,17 @@ exports.delete = async function (req, res) {
       .compare(req.body.userPassword, existingUser.userPassword)
       .catch((err) => {
         console.log(err);
-        res.status(500).json({ msg: "Invalid password!" });
+        return res.status(500).json({ msg: "Invalid password!" });
       });
     //   if password is invalid return error
     if (!validPass) {
-      res.status(400).json({ msg: "Invalid password!" });
+      return res.status(400).json({ msg: "Invalid password!" });
     }
     // if the password is valid, delete the user
     let deletedUser = await User.findOneAndDelete({
       userEmail: req.body.userEmail,
     });
     res.send(deletedUser);
-
   } catch (error) {
     console.log(error);
   }
@@ -109,5 +105,5 @@ exports.logout = async function (req, res) {
   //the below function calls an anonymous function that filters the refresh tokens array and removes the token that is passed in the request
   refreshTokens = refreshTokens.filter((t) => t !== refreshToken);
 
-  res.json({ msg: 'Logout successful' });
+  res.json({ msg: "Logout successful" });
 };
